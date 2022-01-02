@@ -1,0 +1,105 @@
+
+<div class="container">
+    <h1 style="margin-left: 400px;margin-top: 10px;">Register Page</h1>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12" style="margin-left: 400px;margin-top: 100px;">
+            <form (ngSubmit)="Register(form)" #form="ngForm" >
+                
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" 
+                name="email"
+                class="form-control" id="email" placeholder="Enter email"
+                ngModel
+                style="width: 300px;"
+                #email="ngModel"
+                required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+      
+                
+                <span><i style="color: red;"
+                  *ngIf="email.touched && email.value==false"
+                  >Please Enter your email</i></span>
+      
+                  <span><i style="color: red;"
+                    *ngIf="email.touched  && email.valid==false && email.value"
+                    >Please Enter Valid Email</i></span>
+              </div>
+
+
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" 
+              name="password"
+              class="form-control" id="exampleInputPassword1" placeholder="Password"
+              style="width: 300px;"
+              ngModel
+              #password="ngModel"
+              required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+
+
+              <span><i style="color: red;"
+                *ngIf="password.touched && password.value==false"
+                >Please Enter your password</i></span>
+    
+                <span><i  style="color: rgb(143, 133, 133);"
+                  *ngIf="password.touched  && password.valid==false && password.value"
+                  >Please Enter Valid password</i></span><br>
+                <div *ngIf="password.touched && password.valid==false">
+                  <span><i  style="color: rgb(143, 133, 133);"
+                  *ngIf="password.touched  && password.valid==false && password.value"
+                  >Password must contains Uppercase letter </i></span><br>
+
+                  <span><i  style="color: rgb(143, 133, 133);"
+                    *ngIf="password.touched  && password.valid==false && password.value"
+                    >Password must contains Lowercase Letter</i></span><br>
+
+                    <span><i  style="color: rgb(143, 133, 133);"
+                      *ngIf="password.touched  && password.valid==false && password.value"
+                      >Password must contains a Digit</i></span><br>
+
+                      <span><i  style="color: rgb(143, 133, 133);"
+                        *ngIf="password.touched  && password.valid==false && password.value"
+                        >Password must contains atleast 8 characters</i></span>
+
+                </div>
+           
+            </div>
+
+                <div class="form-group">
+                    <label for="confirmpassword">Confirm Password</label>
+                    <input type="password"
+                    name="confirmpassword"
+                    ngModel
+                    [disabled]="!password.valid"
+                    required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                    #confirmpassword="ngModel"
+                    class="form-control" id="confirmpassword" placeholder="Confirm Password"
+                    style="width: 300px;">
+
+                    <span><i
+                      style="color: red;"
+                      *ngIf="
+                      confirmpassword.touched &&
+                      confirmpassword.value!=password.value"
+                      
+                      >Password Doesn't Match</i></span>
+                  </div>
+                  
+
+                  <div class="form-check">
+                    <p><< <a routerLink="" class="link-info">Back to Login</a></p>
+  
+                </div>  
+                <button type="submit"
+                style="margin-left: 90px;"
+                class="btn btn-primary"
+                [disabled]="!(form.valid && confirmpassword.value==password.value)"
+                >Register</button>
+
+  
+
+              </form>
+        </div>
+    </div>
+</div>

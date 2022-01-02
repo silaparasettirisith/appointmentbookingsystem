@@ -1,0 +1,165 @@
+<div class="sidenav">
+    <a (click)="goto(1)" >Add Doctory</a>
+    <a (click)="goto(2)" >Appointment Booking</a>
+    <a (click)="goto(3)">Booking History</a>
+  </div>
+
+<div class="main">
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <span class="navbar-brand">Appointment Booking  </span>
+          <a class="navbar-brand"  routerLink="/homepage"
+          
+          style="margin-left: 10px;"
+          >HomePage  </a>
+          <a class="navbar-brand"  routerLink="/detailpage"
+          routerLinkActive="active-link"
+          style="margin-left: 10px;"
+          >Details-Page  </a>
+    
+          <a class="navbar-brand"
+          routerLink="/"
+          style="float: right;"
+          >Logout</a>
+        </div>
+      </nav>
+    
+    <div *ngIf="display==1">
+        <h1>Add Doctor</h1>
+
+        <form (ngSubmit)=" adddoctor(form)" #form="ngForm">
+               
+            <div class="form-group" >
+                <label for="email">Doctor Name</label>
+                <input type="text" 
+                name="Name"
+                class="form-control" id="email" placeholder="Enter Doctor Name"
+                ngModel
+                style="width: 300px;"
+                #Name="ngModel"
+                required>
+                <span><i style="color: 'red';"
+                  *ngIf="Name.touched && Name.value==false"
+                  >Please Enter your email</i></span>
+              </div>
+
+
+            <div class="form-group">
+              <label for="exampleInputPassword1">Specialization</label>
+              <input type="text" 
+              name="Specialization"
+              class="form-control" id="exampleInputPassword1" placeholder="Specialization"
+              style="width: 300px;"
+              ngModel
+              #Specialization="ngModel"
+              required>
+              <span><i style="color: 'red';"
+                *ngIf="Specialization.touched && Specialization.value==false"
+                >Please Enter your email</i></span>
+
+            </div>
+
+            <button type="submit"
+            style="margin-left: 90px;"
+            class="btn btn-primary"
+            [disabled]="!form.valid"
+            >Add Doctor</button>
+          </form>
+
+
+    </div>
+
+    <div *ngIf="display==2">
+        <h1>Appointment Booking</h1>
+
+        <div>
+            <br><br>
+
+            <ng-multiselect-dropdown
+            [placeholder]="'Choose Doctor'"
+            [settings]="dropdownSettings"
+            [data]="doctors"
+            [(ngModel)]="selectedItems"
+            (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)"
+            (onDeSelect)="onDeSelect($event)"
+          >
+          </ng-multiselect-dropdown>
+        
+            <div *ngIf="doctorbooked.length!=0">
+
+                <br>
+                <br>
+                <h1>Slots</h1>
+                <br>
+                <button style="margin-right: 5px;"
+                [ngStyle]="{'background-color': slots[0]==-1 ? 'red' : slots[0] ? 'green' : 'transparent'   }"
+                (click)="slots[0]!=-1 ? setslot(0) : p()"
+                >9:00 to 9:30</button>                           
+
+                
+                <button style="margin-right: 5px;"   (click)="slots[1]!=-1 ? setslot(1) : p()" [ngStyle]="{'background-color': slots[1]==-1 ? 'red' : slots[1] ? 'green' : 'transparent'   }">9:30 to 10:00</button>
+                <button style="margin-right: 5px;" (click)="slots[2]!=-1 ? setslot(2) : p()"  [ngStyle]="{'background-color': slots[2]==-1? 'red' : slots[2] ? 'green' : 'transparent'  }">10:30 to 11:00</button>
+                <button style="margin-right: 5px;" (click)="slots[3]!=-1 ? setslot(3) :p()" [ngStyle]="{'background-color': slots[3]==-1? 'red' : slots[3] ? 'green' : 'transparent'   }">11:00 to 11:30</button>
+                <button style="margin-right: 5px;" (click)="slots[4]!=-1 ? setslot(4):p()" [ngStyle]="{'background-color': slots[4]==-1? 'red' : slots[4] ? 'green' : 'transparent'   }">11:30 to 12:00</button>
+    
+    
+                <button style="margin-right: 5px;" (click)="slots[5]!=-1 ? setslot(5):p()" [ngStyle]="{'background-color': slots[5]==-1 ? 'red': slots[5] ? 'green' : 'transparent'}">1:00 to 1:30</button>
+                <button style="margin-right: 5px;" (click)="slots[6]!=-1 ? setslot(6):p()" [ngStyle]="{'background-color': slots[6]==-1? 'red' : (slots[6] ? 'green' : 'transparent')}">2:00 to 2:30</button>
+    
+                <button style="margin-right: 5px;" (click)="slots[7]!=-1 ? setslot(7):p()" [ngStyle]="{'background-color': slots[7]==-1? 'red' : (slots[7] ? 'green' : 'transparent')}" >2:30 to 3:00</button>
+                <button style="margin-right: 5px;" (click)="slots[8]!=-1 ? setslot(8):p()" [ngStyle]="{'background-color': slots[8]==-1? 'red' : (slots[8] ? 'green' : 'transparent')}">3:00 to 3:30</button>
+    
+                <button style="margin-right: 5px;" (click)="slots[9]!=-1 ? setslot(9):p()" [ngStyle]="{'background-color': slots[9]==-1? 'red' : (slots[9] ? 'green' : 'transparent')   }">3:30 to 4:30</button>
+                <button style="margin-right: 5px;" (click)="slots[10]!=-1 ? setslot(10):p()" [ngStyle]="{'background-color': slots[10]==-1? 'red' : (slots[10] ? 'green' : 'transparent')   }">6:00 to 6:30</button>
+    
+                <button style="margin-right: 5px;" (click)="slots[11]!=-1 ? setslot(11):p()"  [ngStyle]="{'background-color': slots[11]==-1? 'red' : (slots[11] ? 'green' : 'transparent')   }">6:30 to 7:00</button>
+                <button style="margin-right: 5px;" (click)="slots[12]!=-1 ? setslot(12):p()" [ngStyle]="{'background-color': slots[12]==-1? 'red': (slots[12] ? 'green' : 'transparent')   }">7:30 to 8:30</button>
+    
+                <button style="margin-right: 5px;margin-top: 5px;" (click)="slots[13]!=-1 ? setslot(13):p()"  [ngStyle]="{'background-color':  slots[13]==-1? 'red' : (slots[13] ? 'green' : 'transparent')}">8:30 to 9:00</button>
+    
+                <button style="margin-right: 5px;margin-top: 5px;"  (click)="slots[14]!=-1 ? setslot(14):p()" [ngStyle]="{'background-color': slots[14]==-1? 'red' : (slots[14] ? 'green' : 'transparent')}">9:00 to 9:30</button>
+    
+                <button (click)="clickdoctorbooked()" style="margin-left: 500px;margin-top: 100px;" class="btn btn-primary" [disabled]="slotbooked">Book Appointment</button>
+
+
+            </div>
+
+
+            </div>
+           
+"
+
+
+    </div>
+
+    <div *ngIf="display==3">
+        <h1>Booking History</h1>
+
+        <div class="container">
+            <table class="table table-striped">
+              <thead>
+                  <tr>
+                    <th>id</th>
+                    <th>Doctor Name</th>
+                    <th>Doctor Specialization</th>
+                    <th>Slot</th>
+                    <th>Date</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of studentsbooking">
+                    <td>{{item.id}}</td>
+                  <td>{{ item.doctorname }}</td>
+                  <td>{{ item.doctorspec  }}</td>
+                  <td>{{ item.slot  }}</td>
+                  <td>{{ item.date  }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+    </div>
+</div>
